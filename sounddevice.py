@@ -575,7 +575,10 @@ def query_devices(device=None, kind=None):
         # likely raises an exception on 'mbcs' data than vice versa, see also
         # https://github.com/spatialaudio/python-sounddevice/issues/72.
         # All other host APIs use 'utf-8' anyway.
-        name = name_bytes.decode('utf-8')
+        try:
+            name = name_bytes.decode('utf-8')
+        except:
+            name = name_bytes.decode('gbk')
     except UnicodeDecodeError:
         if info.hostApi in (
                 _lib.Pa_HostApiTypeIdToHostApiIndex(_lib.paDirectSound),
